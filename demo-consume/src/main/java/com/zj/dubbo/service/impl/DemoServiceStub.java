@@ -10,7 +10,6 @@ public class DemoServiceStub implements DemoService {
     public DemoServiceStub(DemoService demoService){
         this.demoService = demoService;
     }
-
     @Override
     public String sayHello(String name) {
         // 此代码在客户端执行, 你可以在客户端做ThreadLocal本地缓存，或预先验证参数是否合法，等等

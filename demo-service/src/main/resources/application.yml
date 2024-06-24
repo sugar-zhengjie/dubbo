@@ -16,6 +16,9 @@ dubbo: #dubbo与nacos的通信配置
     address: nacos://106.14.221.171:8848
   protocol:
     name: dubbo #通信协议名
+    #name: rest
     port: 20880 #配置通信端口，默认为20880
+    accesslog: "true" #输出到log4j
+    #accesslog:"http://localhost/log/txt" #输出到文件
   scan:
     base-packages: com.zj.dubbo

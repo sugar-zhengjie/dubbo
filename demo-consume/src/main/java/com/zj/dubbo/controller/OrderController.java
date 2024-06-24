@@ -24,13 +24,32 @@ public class OrderController {
      * 会把 Proxy 通过构造函数传给 Stub，然后把 Stub 暴露给用户，Stub 可以决定要不要去调 Proxy
      */
 
+    /**
+     * RoundRobinLoadBalance 加权轮询算法
+     * RandomLoadBalance 权重随机算法：根据权重值进行随机负载
+     * LeastActiveLoadBalance 最少活跃调用数算法：活跃调用数越小，表明该服务提供者效率越高，单位时间内可处理更多的请求这个是比较科学的负载均衡算法。
+     * ConsistentHashLoadBalance hash一致性算法：相同参数的请求总是发到同一提供者 当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者， 不会引起剧烈变动
+     *
+     * random、roundrobin、leastactive、consistenthash
+     */
+
     //stub 本地存根
     //@DubboReference(stub = "com.foo.DemoServiceStub") //指定stub对象
     //timeout 服务提供者端超时时间
     //cluster 集群容错
     //retries 重试次数
     //mock 服务降级：如果调用失败返回123
-    @DubboReference(version = "v.1.0", timeout = 3000,retries = 1,cluster = "failfast", mock = "fail: return 123", stub = "true")
+    @DubboReference(
+            version = "v.1.0",
+            timeout = 3000,
+            retries = 1,
+            cluster = "failfast",
+            // mock = "fail: return 123",
+            mock = "com.zj.dubbo.service.MockSayHelloService",
+            stub = "true",
+            loadbalance = "random",
+            check = false
+    )
     private StockService stockService;
 
 
